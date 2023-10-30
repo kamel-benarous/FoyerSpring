@@ -20,6 +20,8 @@ public class Foyer implements Serializable {
     private long idFoyer;
     private String nomFoyer;
     private long capaciteFoyer;
+    @Column(columnDefinition = "boolean default false")
+    private boolean archived;
     @OneToOne(mappedBy = "foyer")
     private Universite universite;
     @OneToMany(mappedBy = "foyer")
