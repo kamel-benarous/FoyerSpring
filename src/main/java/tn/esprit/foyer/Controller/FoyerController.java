@@ -2,6 +2,7 @@ package tn.esprit.foyer.Controller;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.foyer.Entity.Foyer;
 import tn.esprit.foyer.Service.IFoyerService;
@@ -34,6 +35,7 @@ public class FoyerController {
         return this.foyerService.updateFoyer(f);
     }
 
+    @Transactional
     @PutMapping("/archive/{idFoyer}")
     public void archive(@PathVariable long idFoyer) {
         this.foyerService.archiverFoyer(idFoyer);
