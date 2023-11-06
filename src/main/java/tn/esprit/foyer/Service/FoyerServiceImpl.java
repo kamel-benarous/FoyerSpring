@@ -35,4 +35,9 @@ public class FoyerServiceImpl implements IFoyerService {
     public void archiverFoyer(long idFoyer) {
         foyerRepository.archiveById(idFoyer);
     }
+
+    @Override
+    public void removeFoyer(long idFoyer) {
+        foyerRepository.deleteById(idFoyer);
+    }
 }
