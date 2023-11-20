@@ -1,35 +1,38 @@
 package tn.esprit.foyer.Service;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.foyer.Entity.Etudiant;
+import tn.esprit.foyer.Entity.Reservation;
 import tn.esprit.foyer.Repository.EtudiantRepository;
+import tn.esprit.foyer.Repository.ReservationRepository;
 
 import java.util.List;
-
+import java.util.Optional;
 
 @Service
-@AllArgsConstructor
-public class EtudiantServiceImpl implements IEtudiantService{
-    EtudiantRepository etudiantRepository;
+@RequiredArgsConstructor
+public class EtudiantServiceImpl implements IEtudiantService {
+    private final EtudiantRepository etudiantRepository;
+    private final ReservationRepository resevationRepository;
     @Override
     public List<Etudiant> retrieveAllEtudiants() {
         return etudiantRepository.findAll();
     }
 
     @Override
-    public Etudiant addEtudiant(Etudiant etudiant) {
-        return etudiantRepository.save(etudiant);
+    public Etudiant addEtudiant(Etudiant e) {
+        return etudiantRepository.save(e);
     }
 
     @Override
-    public Etudiant updateEtudiant(Etudiant etudiant) {
-        return etudiantRepository.save(etudiant);
+    public Etudiant updateEtudiant(Etudiant e) {
+        return etudiantRepository.save(e);
     }
 
     @Override
     public Etudiant retrieveEtudiant(Long idEtudiant) {
-        return etudiantRepository.findById(idEtudiant).orElse(null);
+        return etudiantRepository.findById(idEtudiant).get();
     }
 
     @Override
@@ -41,5 +44,26 @@ public class EtudiantServiceImpl implements IEtudiantService{
     public List<Etudiant> addEtudiants(List<Etudiant> etudiants) {
         return etudiantRepository.saveAll(etudiants);
     }
-}
 
+
+    @Override
+    public Etudiant affecterEtudiantAReservation(String nomEt, String prenomEt, String idReservation) {
+        Etudiant etudiant = etudiantRepository.findEtudiantByNomEtAndPrenomEt(nomEt, prenomEt);
+        Reservation reservation = resevationRepository.findByIdReservation(idReservation);
+
+        if(etudiant != null && reservation != null) {
+
+
+            List<Etudiant> lsAux = reservation.getEtudiants();
+            lsAux.add(etudiant);
+            reservation.setEtudiants(lsAux);
+
+            resevationRepository.save(reservation);
+            return etudiant;
+        }
+
+        return null;
+    }
+
+
+}

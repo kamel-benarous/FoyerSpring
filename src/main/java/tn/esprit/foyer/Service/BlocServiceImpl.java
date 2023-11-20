@@ -1,6 +1,7 @@
 package tn.esprit.foyer.Service;
 
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.foyer.Entity.Bloc;
 import tn.esprit.foyer.Entity.Chambre;
@@ -11,10 +12,9 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class BlocServiceImpl implements IBlocService{
-
-     BlocRepository blocRepository;
-     ChambreRepository chambreRepository;
+public class BlocServiceImpl implements IBlocService {
+    BlocRepository blocRepository;
+    ChambreRepository chambreRepository;
 
     @Override
     public List<Bloc> retrieveBlocs() {
@@ -33,13 +33,14 @@ public class BlocServiceImpl implements IBlocService{
 
     @Override
     public Bloc retrieveBloc(long idBloc) {
-        return blocRepository.findById(idBloc).orElse(null);
+        return blocRepository.findById(idBloc).get();
     }
 
     @Override
     public void removeBloc(long idBloc) {
         blocRepository.deleteById(idBloc);
     }
+
 
     @Override
     public Bloc affecterChambresABloc(List<Long> numChambres, String nomBloc) {
@@ -48,10 +49,13 @@ public class BlocServiceImpl implements IBlocService{
 
         numChambres.forEach((id) -> {
             Chambre c = chambreRepository.findById(id).orElse(null);
-            if(c != null) b.getChambre().add(c);
+
+            if(c != null)
+
+                b.getChambre().add(c);
+
         });
 
         return blocRepository.save(b);
     }
 }
-

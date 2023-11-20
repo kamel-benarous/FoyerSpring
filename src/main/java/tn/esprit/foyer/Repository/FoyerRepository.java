@@ -11,5 +11,5 @@ import tn.esprit.foyer.Entity.Foyer;
 public interface FoyerRepository extends JpaRepository<Foyer, Long> {
     @Modifying
     @Query("update Foyer f set f.archived = true where f.idFoyer = :id")
-    void archiveById(@Param("id") long id);
+    void UpdateArchiver(@Param("id") long id);
 }

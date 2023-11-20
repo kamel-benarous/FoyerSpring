@@ -1,8 +1,10 @@
 package tn.esprit.foyer.Controller;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.foyer.Entity.Foyer;
 import tn.esprit.foyer.Service.IFoyerService;
@@ -11,33 +13,34 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/foyers")
+@Slf4j
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@RequestMapping("/foyer")
+@CrossOrigin("*")
+
 public class FoyerController {
     IFoyerService foyerService;
-
     @GetMapping("/all")
     public List<Foyer> getAll() {
-        return this.foyerService.retrieveAllFoyers();
+        return foyerService.retrieveAllFoyers();
     }
-
-    @GetMapping("/{idFoyer}")
-    public Foyer getById(@PathVariable long idFoyer) {
-        return this.foyerService.retrieveFoyer(idFoyer);
+    @GetMapping("/{id}")
+    public Foyer getFoyerById(@PathVariable Long id){
+        return foyerService.retrieveFoyer(id);
     }
 
     @PostMapping("/add")
-    public Foyer addFoyer(@RequestBody Foyer f) {
-        return this.foyerService.addFoyer(f);
+    public Foyer addFoyer(@RequestBody Foyer e) {
+        return foyerService.addFoyer(e);
     }
-
     @PutMapping("/update")
-    public Foyer updateFoyer(@RequestBody Foyer f) {
-        return this.foyerService.updateFoyer(f);
+    public Foyer updateFoyer( @RequestBody Foyer f){
+        return foyerService.updateFoyer(f);
+    }
+    @PutMapping("/SetArchiveTrue/{id}")
+    public void ArchiveFoyer(@PathVariable Long id){
+        foyerService.archiverFoyer(id);
+
     }
 
-    @Transactional
-    @PutMapping("/archive/{idFoyer}")
-    public void archive(@PathVariable long idFoyer) {
-        this.foyerService.archiverFoyer(idFoyer);
-    }
 }

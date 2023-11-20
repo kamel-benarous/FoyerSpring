@@ -1,6 +1,8 @@
 package tn.esprit.foyer.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.foyer.Entity.Foyer;
 import tn.esprit.foyer.Repository.FoyerRepository;
@@ -31,13 +33,8 @@ public class FoyerServiceImpl implements IFoyerService {
         return foyerRepository.findById(idFoyer).orElse(null);
     }
 
-    @Override
+    @Transactional
     public void archiverFoyer(long idFoyer) {
-        foyerRepository.archiveById(idFoyer);
-    }
-
-    @Override
-    public void removeFoyer(long idFoyer) {
-        foyerRepository.deleteById(idFoyer);
+        foyerRepository.UpdateArchiver(idFoyer);
     }
 }

@@ -1,11 +1,11 @@
 package tn.esprit.foyer.Service;
 
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import tn.esprit.foyer.Entity.Universite;
 import tn.esprit.foyer.Repository.FoyerRepository;
 import tn.esprit.foyer.Repository.UniversiteRepository;
+import tn.esprit.foyer.Service.IUniversiteService;
 
 import java.util.List;
 
@@ -30,16 +30,14 @@ public class UniversiteServiceImpl implements IUniversiteService {
     }
 
     @Override
-    public Universite retrieveUniversite(long idUniversite) {
-        return universiteRepository.findById(idUniversite).orElse(null);
+    public Universite retrieveUniversite(long idUniversity){
+        return universiteRepository.findById(idUniversity).orElse(null);
     }
 
     @Override
-    public void removeUniversite(long idUniversite) {
-        universiteRepository.deleteById(idUniversite);
+    public void removeUniversite(long idUniversity) {
+        universiteRepository.deleteById(idUniversity);
     }
-
-    @Override
     public Universite affecterFoyerAUniversite(long idFoyer, String nomUniversite) {
         Universite u = universiteRepository.findByNomUniversite(nomUniversite);
         if(u!=null) {
@@ -49,10 +47,12 @@ public class UniversiteServiceImpl implements IUniversiteService {
     }
 
     @Override
-    public Universite desaffecterFoyerAUniversite(long idUniversite) {
-        Universite universite = universiteRepository.findById(idUniversite).orElse(null);
-        if(universite != null) universite.setFoyer(null);
-        return universiteRepository.save(universite);
+    public Universite desaffecterFoyerAUniversite( long idUniversite) {
+        Universite u = universiteRepository.findById(idUniversite).get();
+        if(u!=null) {
+            u.setFoyer(null);
+        }
+        return universiteRepository.save(u);
     }
-}
 
+}
