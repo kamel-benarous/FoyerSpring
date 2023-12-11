@@ -4,5 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.foyer.Entity.Etudiant;
 
 public interface EtudiantRepository extends JpaRepository<Etudiant, Long> {
-    Etudiant findEtudiantByNomEtAndPrenomEt(String nomEt,String prenomEt);
+    Etudiant findEtudiantByNomEtudiantAndPrenomEtudiant(String nomEt,String prenomEt);
 }

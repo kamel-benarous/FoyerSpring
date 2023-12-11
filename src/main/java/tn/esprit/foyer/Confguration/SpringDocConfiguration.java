@@ -33,7 +33,7 @@ public class SpringDocConfiguration {
     public GroupedOpenApi etudiantPublicAPI() {
         return GroupedOpenApi.builder()
                 .group("etudiants")
-                .pathsToMatch("/api/etudiants/**")
+                .pathsToMatch("/etudiants/**")
                 .pathsToExclude("**")
                 .build();
     }
@@ -42,7 +42,7 @@ public class SpringDocConfiguration {
     public GroupedOpenApi foyerPublicAPI() {
         return GroupedOpenApi.builder()
                 .group("foyers")
-                .pathsToMatch("/api/foyers/**")
+                .pathsToMatch("/foyer/**")
                 .pathsToExclude("**")
                 .build();
     }
